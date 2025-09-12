@@ -6,6 +6,5 @@ tempCodeRunnerFile.cpp
 test.cpp
 test.exe
 main.exe
-true.cnf
-sudoku.cnf
-sudoku.res
+*.cnf
+*.res
