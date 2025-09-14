@@ -7,16 +7,6 @@
 #include<ctime>
 #include<windows.h>
 #define TIMELIMIT 20000
-// using namespace mystl;
-// template<class T>
-// struct vector{
-// 	T data;
-// 	vector *next,*pre;
-// 	vector(){
-// 		data=T(0);
-// 		next=nullptr;
-// 	}
-// };
 namespace mystl{
 
 	template<class T>
@@ -117,89 +107,6 @@ namespace mystl{
 			return a;
 		}
 	};
-
-	// template<class T>
-	// struct Greater{
-	// 	bool operator()(T a,T b){
-	// 		return a>b;
-	// 	}
-	// };
-
-	// template<class T>
-	// struct Less{
-	// 	bool operator()(T a,T b){
-	// 		return a<b;
-	// 	}
-	// };
-
-	// template<class T, class CMP = Greater<T>>
-	// class priority_queue{
-	// private:
-	//     int sz;//优先队列大小
-	//     int capacity;//优先队列容量
-	//     T *pq;//数组保存优先队列里的元素
-	// 	CMP cmp; // comparator 实例
-	// public:
-	// 	priority_queue():sz(0),capacity(32),pq(new T[33]){}
-	// 	priority_queue(int n){//构造函数
-	// 		pq=new T[n+1];//pq[0]不使用
-	// 		sz=0;
-	// 		capacity=n;
-	// 	}
-	//     ~priority_queue(){//析构函数
-	//         delete []pq;
-	//     }
-	//     void push(T val){
-	//         if(sz>=capacity){//如果存储范围超过了capacity，则将容量扩展为二倍
-	//             T* temp=new T[capacity<<1];
-	//             for(int i=1;i<=capacity;i++){
-	//                 temp[i]=pq[i];
-	//             }
-	//             delete []pq;
-	//             pq=temp;
-	//             capacity<<=1;
-	//         }
-	//         sz++;
-	//         pq[sz]=val;
-	//         swim(sz);//将新插入的元素进行上浮操作
-	//     }
-	//     T top(){//返回优先度最高的元素
-	//         return pq[1];
-	//     }
-	//     T pop(){//弹出优先度最高的元素
-	//         T temp=pq[1];
-	//         swap(pq[1],pq[sz--]);
-	//         sink(1);
-	//         return temp;
-	//     }
-	//     int size(){
-	//         return sz;
-	//     }
-	//     bool empty(){
-	//         return sz==0;
-	//     }
-	// private:
-	//     // bool cmp(T a,T b){
-	//     //     return a<b;
-	//     // }
-	//     void swim(int n){
-	//         while(n>1&&cmp(pq[n],pq[n>>1])){//如果pq[n]比父节点的优先级大，将其上浮
-	//             swap(pq[n],pq[n>>1]);
-	//             n>>=1;
-	//         }
-	//     }
-	//     void sink(int n){
-	//         while(2*n<=sz){
-	//             int k=2*n;
-	//             if(k<sz&&cmp(pq[k+1],pq[k]))k++;//选出左右孩子中优先级更高的那个
-	//             if(cmp(pq[k],pq[n])){//如果pq[n]的优先级低，将其下沉
-	//                 swap(pq[n],pq[k]);
-	//                 n=k;
-	//             }else break;
-	//         }
-	//     }
-	// };
-
 };
 
 struct CNF{
@@ -329,12 +236,6 @@ struct CNF{
 				return false;
 			}
 		}
-		// for(int i=1;i<=var_c;i++){//将无效变量删除
-		// 	if(var_mp[i].length()==0) var_status[i]=true;
-		// }
-		// for(int i=0;i<=cls_c;i++){
-		// 	if(cls_mp[i].length()==0) cls_status[i]=true;
-		// }
 
 		if(cl<cls_c) throw "CNF error:clause not enough";
 		fclose(fin);
@@ -351,19 +252,6 @@ struct CNF{
 			return false;
 		}
 		std::fstream out(file,std::ios::out);
-		// if(ms>=TIMELIMIT){
-		// 	out<<"s -1\n";
-		// }else{
-		// 	out<<"s "<<flag<<std::endl;
-		// 	if(flag){
-		// 		out<<"v";
-		// 		for(int i=1;i<=var_c;i++){
-		// 			out<<' '<<(value[i]?1:-1)*i;
-		// 		}
-		// 		out<<std::endl;
-		// 	}
-		// }
-		// out<<"t "<<ms<<std::endl;
 		out<<*this<<std::endl;
 		return true;
 	}
@@ -449,41 +337,6 @@ struct CNF{
 		}
 		return true;
 	}
-
-	// bool dpll(){
-	// 	ms=(clock()-start)*1000/CLOCKS_PER_SEC;
-	// 	if(ms>=TIMELIMIT) throw "timeout";
-
-	// 	mystl::stack<Node*> bp;
-	// 	if(!simplify(bp)){//单子句传播
-	// 		rec(bp);
-	// 		return false;
-	// 	}
-
-	// 	bool emp=true;//判断范式是否为空
-	// 	for(int i=1;i<=cls_c;i++){
-	// 		if(!cls[i].status){
-	// 			emp=false;
-	// 			break;
-	// 		}
-	// 	}
-	// 	if(emp) return true;
-
-	// 	int v=1;//寻找未被删除的变元
-	// 	while(v<=var_c&&var[v].status) v++;
-
-	// 	mystl::stack<Node*> branch;
-	// 	del_var(v,true,branch);
-	// 	if(dpll()) return true;
-	// 	else rec(branch);
-
-	// 	del_var(v,false,branch);
-	// 	if(dpll()) return true;
-		
-	// 	rec(branch);
-	// 	rec(bp);
-	// 	return false;
-	// }
 
 	bool dpll(){
         ms=(clock()-start)*1000/CLOCKS_PER_SEC;

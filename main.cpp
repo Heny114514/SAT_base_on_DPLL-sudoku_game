@@ -13,11 +13,6 @@ namespace dpll1{
 
 using namespace std;
 using namespace std::filesystem;
-menu::MenuTable chooser(2,"SAT on DPLL",{
-	"solve cnf file",
-	"solve sudoku",
-	"exit",
-});
 vector<string> sudoku_preset={
 	".8.........9.8..457.6.1......4..6.......2...........91.714...5...8.5.7..2..89...6",
 	"942...5....3......15..4........5.....1..739..794..1...5.9.841.7.3.....5.....324..",
@@ -81,10 +76,14 @@ int main(){
     SetConsoleCP(CP_UTF8);
     system("chcp 65001 > nul");
 	while(1){
-		int chs=chooser.choose();
-		if(chs==3) break;
+		int chs=menu::MenuTable(2,"SAT on DPLL",{
+			"solve cnf file",
+			"solve sudoku",
+			"exit",
+		}).choose();
+		if(chs==3) break; //exit
 
-		if(chs==1){
+		if(chs==1){//solve cnf file
 			system("cls");
 			int chs=menu::MenuTable(2,"solve cnf file",{
 				"open directory",
@@ -92,11 +91,11 @@ int main(){
 				"cancel"
 			}).choose();
 
-			if(chs==3){
+			if(chs==3){//cancel
 				continue;
 			}
 
-			if(chs==1){
+			if(chs==1){//open directory
 				cout<<"Please enter directory:";
 				string dir;
 				cin>>dir;
@@ -117,7 +116,7 @@ int main(){
 			    }
 			}
 
-			if(chs==2){
+			if(chs==2){//open file
 				cout<<"Please enter file:";
 				string file;
 				cin>>file;
@@ -125,26 +124,26 @@ int main(){
 			}
 		}
 		
-		if(chs==2){
+		if(chs==2){// solve sudoku
 			system("cls");
 			int chs=menu::MenuTable(2,"solve sudoku",{
 				"general sudoku",
 				"%-sudoku",
 				"cancel"
 			}).choose();
-			if(chs==3) continue;
+			if(chs==3) continue;//cancel
 
 			string title;
-			SUDOKU *baseptr;
+			SUDOKU *baseptr;//SUDOKU基类指针
 			vector<string> *preset;
 			menu::MenuTable *sudoku_chooser;
-			if(chs==1){
+			if(chs==1){//general sudoku
 				title="general sudoku";
 				baseptr=new sudoku;
 				preset=&sudoku_preset;
 				sudoku_chooser=new menu::MenuTable(1,"choose a sudoku",sudoku_preset);
 			}
-			if(chs==2){
+			if(chs==2){//%-sudoku
 				title="%-sudoku";
 				baseptr=new psudoku;
 				preset=&psudoku_preset;
@@ -157,18 +156,37 @@ int main(){
 				"generate a new sudoku",
 				"cancel"
 			}).choose();
-			if(genchs==3) continue;
+			if(genchs==3) continue;//cancel
 
-			if(genchs==1){
+			if(genchs==1){//choose a sudoku
 				int prechs=sudoku_chooser->choose();
 				baseptr->readString((*preset)[prechs-1].c_str());
 				cout<<"solving sudoku ...\n";
 				baseptr->solve();
 				cout<<"sudoku solved in "<<baseptr->rtime()<<" ms\n";
 			}
-			if(genchs==2){
+			if(genchs==2){//generate a new sudoku
+				system("cls");
+				int difchs=menu::MenuTable(4,"difficulty",{
+					"easy",
+					"normal",
+					"hard",
+					"custom"
+				}).choose();
+				int del;
+				if(difchs==4){//custom
+					cout<<"Please enter the number of digits you want to remove(1~80):";
+					while(1){
+						cin>>del;
+						if(del>=1&&del<=80) break;
+						cout<<"please enter a number from 1 to 80:";
+					}
+				}else{//easy/normal/hard
+					del=20*difchs;
+				}
+
 				cout<<"generating sudoku ...\n";
-				baseptr->generate();
+				baseptr->generate(del);
 				cout<<"sudoku generated in "<<baseptr->rtime()<<" ms\n";
 			}
 

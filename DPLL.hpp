@@ -237,19 +237,6 @@ struct CNF{
 			return false;
 		}
 		std::fstream out(file,std::ios::out);
-		// if(ms>=TIMELIMIT){
-		// 	out<<"s -1\n";
-		// }else{
-		// 	out<<"s "<<flag<<std::endl;
-		// 	if(flag){
-		// 		out<<"v";
-		// 		for(int i=1;i<=var_c;i++){
-		// 			out<<' '<<(value[i]?1:-1)*i;
-		// 		}
-		// 		out<<std::endl;
-		// 	}
-		// }
-		// out<<"t "<<ms<<std::endl;
 		out<<*this<<std::endl;
 		return true;
 	}
