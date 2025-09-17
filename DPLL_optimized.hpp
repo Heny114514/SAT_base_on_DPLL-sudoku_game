@@ -54,30 +54,6 @@ namespace mystl{
 		
 	};
 
-	// template<class T>
-	// class stack{
-	// 	private:
-	// 	static const int MAX=10000;
-	// 	T arr[MAX];
-	// 	int top;
-
-	// 	public:
-	// 	stack():top(0){}
-	// 	void push(T a){
-	// 		arr[top++]=a;
-	// 	}
-	// 	T pop(){
-	// 		if(arr==0){
-	// 			throw "stack error";
-	// 			return T(0);
-	// 		}
-	// 		return arr[top--];
-	// 	}
-	// 	bool empty(){
-	// 		return top==0;
-	// 	}
-	// };
-
 	template<class T>
 	class stack{
 		private:
